@@ -5,6 +5,6 @@ namespace HeadphoneLib
     public class Headphone {
         public int Id { get; set; }
         public string DriverType { get; set; }
-        public string Catergory { get; set; }
+        public string Category { get; set; }
     }
 }
