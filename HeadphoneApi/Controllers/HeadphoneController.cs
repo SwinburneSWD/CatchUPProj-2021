@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using HeadphoneLib;
+using HeadphoneApi.Services;
 
 namespace HeadphoneApi.Controllers
 {
@@ -12,31 +13,25 @@ namespace HeadphoneApi.Controllers
     [Route("[controller]")]
     public class HeadphoneController : ControllerBase
     {
-        public List<Headphone> _headphones = new List<Headphone> {
-                                                        new Headphone { Id = 1, DriverType = "Dynamic", Catergory = "Over-Ear" },
-                                                        new Headphone { Id = 2, DriverType = "Ortho", Catergory = "Open-Ear" },
-                                                        new Headphone { Id = 3, DriverType = "BA", Catergory = "In-Ear" }
-                                                        };
-
-
+        private DatabaseHandler _dbh;
         public HeadphoneController()
         {
-
+            this._dbh = new DatabaseHandler();
         }
 
         [HttpGet]
-        public List<Headphone> GetAll()
+        public string GetAll()
         {
-            return this._headphones;
+            return this._dbh.TestConnection();
         }
 
-        [HttpGet("{id}")]
-        public Headphone GetHeadphoneById(int id) {
-            if (id > -1 && id < this._headphones.Count()) {
-                return this._headphones[id - 1];
-            }
+        // [HttpGet("{id}")]
+        // public Headphone GetHeadphoneById(int id) {
+        //     if (id > -1 && id < this._headphones.Count()) {
+        //         return this._headphones[id - 1];
+        //     }
 
-            return null;
-        }
+        //     return null;
+        // }
     }
 }
