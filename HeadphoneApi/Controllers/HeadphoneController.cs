@@ -20,9 +20,9 @@ namespace HeadphoneApi.Controllers
         }
 
         [HttpGet]
-        public string GetAll()
+        public List<Headphone> GetAll()
         {
-            return this._dbh.TestConnection();
+            return this._dbh.GetAllHeadphones();
         }
 
         // [HttpGet("{id}")]

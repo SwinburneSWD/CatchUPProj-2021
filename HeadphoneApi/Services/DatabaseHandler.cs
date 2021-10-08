@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using HeadphoneLib;
 using Microsoft.Data.SqlClient;
 
 namespace HeadphoneApi.Services
@@ -19,6 +21,31 @@ namespace HeadphoneApi.Services
 
             } catch (Exception e) {
                 return "Unsuccessful";
+            }
+        }
+
+        public List<Headphone> GetAllHeadphones() {
+            List<Headphone> headphones = new List<Headphone>();
+
+            using(this._connection = new SqlConnection(this._connectionString)) {
+                string query = "SELECT * FROM Headphone";
+                SqlCommand command = new SqlCommand(query, this._connection);
+
+                this._connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                
+                while(reader.Read()) {
+                    int id = reader.GetInt32(0);
+                    string driverType = reader.GetString(1);
+                    string category = reader.GetString(2);
+
+                    // Object Relational Mapping 
+                    headphones.Add(new Headphone() { Id = id, DriverType = driverType, Category = category });
+
+                }
+
+                return headphones;
+
             }
         }
     }
